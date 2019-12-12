@@ -13,10 +13,26 @@ import os
 
 # Constants?
 days = ["L", "K", "M", "J", "V", "S"]
-headers = ["Codigo", "Nombre", "Profesor", "Creditos"]
+some_headers = ["Codigo", "Nombre", "Profesor", "Creditos"]
+schedules_generated = []
+courses_list = []
+id_count = 0
 
 def writeFile(filename, data):
-    pass
+    #data is a list of schedules->(list of courses)
+    file = open(filename, "w")
+    file.write("-----------------------------------------------")
+    file.write("\tSchedules generated: \n")
+    file.write("-----------------------------------------------")
+    for schedule in data:
+        # iterating into the schedules
+        file.write(schedule[0]) #shedule id
+        file.write(schedule[1]) #credits for schedule
+        for course in schedule[2]:
+            #iterating into the courses
+            file.write(course_to_string(course))
+        file.write("-----------------------------------------------")
+    file.close()
 
 def courseCollide(startHour, finalHour, otherStartHour, otherFinalHour):
 # (1200, 1350, 1300, 14:50) collide X
@@ -61,12 +77,18 @@ def menu():
     print("5. Salir                   ")
     print("---------------------------")
 
+def getDay(day, startHour, finalHour):
+    return [day, startHour, finalHour]
+
+def getCourse(code, name, teacher, credits, days):
+    return [code, name, teacher, credits, days]
+
 def createCourse():
 # [Code, Name, Teacher, Credits, [[Day, [startHour, finalHour]], [Day, [startHour, finalHour]] ]]
 # ['IC-2001', 'Estructuras de Datos', 'XXXXXXXXXXXXX', '4', [['M', ['09:30', '11:20']], ['V', ['9:30', '11:20']]]]
-    global headers, days
+    global some_headers, days
     course = []
-    for header in headers:
+    for header in some_headers:
         course += [input(header + " :")]
     schedule_course = []
     day_amount= int(input("Cantidad de Dias:"))
@@ -82,14 +104,52 @@ def createCourse():
     print(course)
     return course
 
+def getCreditsPerShedule(courses):
+    # the sum of the credits for each course
+    return sum( [(int(course[3]) for course in courses)] )
+
+def getSchedule(scheduleId, courses):
+    # Schedule Id, credits, [.....
+    # [Code, Name, Teacher, Credits, [[Day, [startHour, finalHour]], [Day, [startHour, finalHour]] ]]
+    # ...]
+    return [scheduleId, getCreditsPerShedule(courses), courses]
+
+def contains_course(code, courses):
+    codes = set( course[0] for course in courses )
+    return code in codes
+
+def haveAllTheCourses(next_shedule):
+    global courses_list
+    codes =  set( course[0] for course in courses_list )
+    for course in next_shedule:
+        if not course[0] in codes:
+            return False
+    return True
+
+def generateSchedules():
+    #generate all the posibilities with all the courses given
+    global id_count, schedules_generated, courses_list
+    chances = pow(len(courses_list), len(courses_list)) 
+    while (chances != 0):
+        new_schedule = []
+        while not haveAllTheCourses(new_schedule):
+            pass
+
+        # HERE #
+
+        chances-=1
+
+    pass
+
 def run():
 #main (menu to add, remove courses and generate the schedules)
-    courses_list = []
-    schedule = []
+    global courses_list
     while (True):
         option = int(input("Ingrese una de las opciones"))
         if option == 1:
-            courses_list.append(createCourse())
+            course = createCourse()
+            if course != None:
+                courses_list.append(course)
         elif (option == 2):
             pass
         elif (option == 3):
