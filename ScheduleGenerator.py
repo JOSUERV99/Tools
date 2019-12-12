@@ -1,31 +1,69 @@
-"""
-    Schedule Generator
-    author : Josue Rojas Vega
-    since : 9-12-2019
-    objective: generate all the posibilities to create my schedules, 
-                detecting all the collides, and too practice a little bit of Python
-"""
+#####################################################################################
+"""                                                                                 #            
+#    Schedule Generator                                                             #    
+#    author : Josue Rojas Vega                                                      #
+#    since : 9-12-2019                                                              #
+#    objective: generate all the posibilities to create my schedules,               #
+#                detecting all the collides                                         #
+"""                                                                                 #        
+#####################################################################################
 
+#Libraries
+import os
+
+# Constants?
 days = ["L", "K", "M", "J", "V", "S"]
 headers = ["Codigo", "Nombre", "Profesor", "Creditos"]
 
 def writeFile(filename, data):
     pass
 
-def courseCollide(course1, course2):
-    return True
+def courseCollide(startHour, finalHour, otherStartHour, otherFinalHour):
+# (1200, 1350, 1300, 14:50) collide X
+    return otherStartHour in range(otherStartHour, otherFinalHour+1) \
+        or otherFinalHour in range(otherStartHour, otherFinalHour+1)
+
+def getDaysPerCourse(course):
+# [ "L", "M" ]
+    return [ day[0] for day in course[4] ]
+
+def getRealHour(hour):
+# 12:00 -> 1200 (for verify range later)
+    return int(hour[:2])*100 + int(hour[3:])
+
+def rightHour(hour):
+# Format: 00:00 -> 23:59
+    return len(hour) == 5 and int(hour[:2]) in range(0, 24) \
+        and int(hour[3:]) in range(0, 60)
+
+def course_to_string(course):
+    # ["Codigo", "Nombre", "Profesor", "Creditos"]
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    print("Codigo  : "+course[0])
+    print("Nombre  : "+course[1])
+    print("Profesor: "+course[2])
+    print("Creditos: "+course[3])
+    print("Horario :")
+    for day in course[4]:
+        print(day[0], end="") #initial letter
+        print(day[1][0], end="") #start hour
+        print(day[1][1]) #final hour
+    print("<<<<<<<<<<<<<<<<<<<<<<<<<<<")
 
 def menu():
+    # Menu
     print("---Generador de Horarios---")
     print("0. Mostrar cursos          ")
     print("1. Agregar curso           ")
     print("2. Eliminar curso          ")
     print("3. Reset                   ")
-    print("4. Generar horarios (excel)")
+    print("4. Generar horarios (.csv) ")
     print("5. Salir                   ")
     print("---------------------------")
 
 def createCourse():
+# [Code, Name, Teacher, Credits, [[Day, [startHour, finalHour]], [Day, [startHour, finalHour]] ]]
+# ['IC-2001', 'Estructuras de Datos', 'XXXXXXXXXXXXX', '4', [['M', ['09:30', '11:20']], ['V', ['9:30', '11:20']]]]
     global headers, days
     course = []
     for header in headers:
@@ -45,8 +83,9 @@ def createCourse():
     return course
 
 def run():
+#main (menu to add, remove courses and generate the schedules)
     courses_list = []
-    schedules_list = []
+    schedule = []
     while (True):
         option = int(input("Ingrese una de las opciones"))
         if option == 1:
