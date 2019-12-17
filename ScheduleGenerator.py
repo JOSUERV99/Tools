@@ -10,6 +10,7 @@
 
 #Libraries
 import os
+from random import randint
 
 # Constants?
 days = ["L", "K", "M", "J", "V", "S"]
@@ -54,17 +55,19 @@ def rightHour(hour):
 
 def course_to_string(course):
     # ["Codigo", "Nombre", "Profesor", "Creditos"]
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>")
-    print("Codigo  : "+course[0])
-    print("Nombre  : "+course[1])
-    print("Profesor: "+course[2])
-    print("Creditos: "+course[3])
-    print("Horario :")
+    string = ">>>>>>>>>>>>>>>>>>>>>>>>>>>\n";
+    string += "Codigo  : "+course[0]+"\n"
+    string += "Nombre  : "+course[1]+"\n"
+    string += "Profesor: "+course[2]+"\n"
+    string += "Creditos: "+str(course[3])+"\n"
+    string += "Horario :\n"
     for day in course[4]:
-        print(day[0], end="") #initial letter
-        print(day[1][0], end="") #start hour
-        print(day[1][1]) #final hour
-    print("<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+        string += day[0] #initial letter
+        string += day[1][0] #start hour
+        string += day[1][1] + "\n" #final hour
+    string += "<<<<<<<<<<<<<<<<<<<<<<<<<<<\n"
+    print(string)
+    return string
 
 def menu():
     # Menu
@@ -132,15 +135,18 @@ def generateSchedules():
     chances = pow(len(courses_list), len(courses_list)) 
     while (chances != 0):
         new_schedule = []
-        while not haveAllTheCourses(new_schedule):
-            pass
-
-        # HERE #
-
+        counter = 0
+        while not haveAllTheCourses(new_schedule) and new_schedule not in schedules_generated:
+            new_course = courses_list[randint()]
+            if ( new_course not in new_schedule ):
+                for course in new_schedule:
+                    if courseCollide(new_course, course):
+                        continue
+            if (counter == 100):
+                break
+            counter+=1
         chances-=1
-
-    pass
-
+    
 def run():
 #main (menu to add, remove courses and generate the schedules)
     global courses_list
