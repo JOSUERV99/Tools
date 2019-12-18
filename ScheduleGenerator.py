@@ -11,6 +11,7 @@
 #Libraries
 import os
 from random import randint
+import time 
 
 # Constants?
 days = ["L", "K", "M", "J", "V", "S"]
@@ -69,14 +70,24 @@ def course_to_string(course):
     print(string)
     return string
 
+def showCourses():
+    global courses_list
+    if (len(courses_list) != 0 ):
+        print("Mostrando cursos: ")
+        for course in courses_list:
+            print(course_to_string(course))
+        input("")
+    else:
+        print("No hay cursos a mostrar")
+
 def menu():
     # Menu
     print("---Generador de Horarios---")
     print("0. Mostrar cursos          ")
     print("1. Agregar curso           ")
     print("2. Eliminar curso          ")
-    print("3. Reset                   ")
-    print("4. Generar horarios (.csv) ")
+    print("3. Generar Horarios        ")
+    print("4. Generar archivo  (.txt) ")
     print("5. Salir                   ")
     print("---------------------------")
 
@@ -137,7 +148,7 @@ def generateSchedules():
         new_schedule = []
         counter = 0
         while not haveAllTheCourses(new_schedule) and new_schedule not in schedules_generated:
-            new_course = courses_list[randint()]
+            new_course = courses_list[randint(0, len(courses_list))]
             if ( new_course not in new_schedule ):
                 for course in new_schedule:
                     if courseCollide(new_course, course):
@@ -146,24 +157,40 @@ def generateSchedules():
                 break
             counter+=1
         chances-=1
-    
+
 def run():
 #main (menu to add, remove courses and generate the schedules)
-    global courses_list
+    global courses_list, schedules_generated
     while (True):
-        option = int(input("Ingrese una de las opciones"))
+        opcion = 0
+        menu()
+        try:
+            option = int(input("*"*40+"\nIngrese una de las opciones: -> "))
+        except ValueError:
+            continue
         if option == 1:
             course = createCourse()
             if course != None:
                 courses_list.append(course)
-        elif (option == 2):
-            pass
-        elif (option == 3):
-            pass
         elif (option == 4):
-            pass
+            filename = input("Ingresa el nombre del archivo a crear: ")
+            writeFile(filename, courses_list)
+        elif (option == 3):
+            print("Generacion de los horarios...")
+            time.sleep(2)
+            generateSchedules()
+            time.sleep(2)
+            print("Terminado.")
+            time.sleep(1)
+            os.system("clear")
+        elif (option == 2 or option == 1):
+            print("Que tratas de hacer?")
+        elif (option == 0):
+            showCourses()
         else:
             return
+        time.sleep(2)
+        os.system("clear")
 
 if __name__ == "__main__":
     run()
