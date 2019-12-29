@@ -161,6 +161,7 @@ def generateSchedules():
 def run():
 #main (menu to add, remove courses and generate the schedules)
     global courses_list, schedules_generated
+    
     while (True):
         opcion = 0
         menu()
@@ -190,7 +191,7 @@ def run():
         else:
             return
         time.sleep(2)
-        os.system("clear")
+        os.system("cls")
 
 if __name__ == "__main__":
     run()
