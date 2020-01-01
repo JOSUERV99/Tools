@@ -31,7 +31,7 @@ def login(credentials, driver):
 # initial dialog to choose the course period (example: )
 def selectCourseStage(driver):
     # choose stage
-    button_course = driver.find_element_by_class_name("btn_Consultar")
+    button_course = driver.find_elements_by_class_name("btn_Consultar")[1] #second option
     button_course.click()
 
 # schedule
