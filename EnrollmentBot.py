@@ -4,7 +4,7 @@
 """
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-import time
+import time, json
 
 chrome_driver_path = r"C:\Users\JRV\Desktop\WebCrawling with Selenium (Python)\chromedriver.exe"
 initial_page = r"https://tec-appsext.itcr.ac.cr/Matricula/frmAutenticacion.aspx?ReturnUrl=%2fmatricula"
@@ -42,6 +42,14 @@ def getCoursesData(filename, driver):
     file = open(filename, "w")
     file.write(info.text)
     file.close()
+
+def logout(driver):
+    #TODO: using the logout button
+    pass
+
+def generateJSON(driver, filename):
+    #TODO: like a dict
+    pass
 
 print("opening chrome...")
 driver = getChromeDriver(chrome_driver_path, initial_page)
