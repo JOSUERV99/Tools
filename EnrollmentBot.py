@@ -37,7 +37,7 @@ def selectCourseStage(driver):
 # schedule
 def getCoursesData(filename, driver):
     schedule_table = driver.find_element_by_id("tBodyCursos")
-    #file = open("schedule.txt", "w")
+    #file = open("schedule.txt", "w") css_selector = #divHCI1107 > div > table
     info = schedule_table.find_element_by_xpath("//*[@id='tBodyCursos']/tbody")
     file = open(filename, "w")
     file.write(info.text)
@@ -48,5 +48,5 @@ driver = getChromeDriver(chrome_driver_path, initial_page)
 login(credentials, driver)
 selectCourseStage(driver)
 getCoursesData(filename, driver)
-driver.close() # close the chrome navigator
 print("closing chrome...")
+driver.close() # close the chrome navigator
