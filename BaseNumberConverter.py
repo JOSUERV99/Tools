@@ -8,10 +8,10 @@
         BIN -> DEC *
         HEX -> BIN
         HEX -> OCT
-        HEX -> DEC
+        HEX -> DEC x
         OCT -> BIN
         OCT -> HEX
-        OCT -> DEC
+        OCT -> DEC *
         DEC -> BIN *
         DEC -> HEX *
         DEC -> OCT
@@ -19,7 +19,15 @@
 
 from math import log, ceil
 import tkinter
+validChars = "0123456789ABCDEF" #TODO: modifiy allToDec for hex numbers
 headers = ["BIN", "HEX", "OCT", "DEC"]
+
+def allToDec(number, base=10):
+    decimal = 0
+    number = number[::-1]
+    for i in range(len(number)):
+        decimal += int(number[i]) * base**i
+    return decimal
 
 def binToOct(binario):
     octal = ""
@@ -29,14 +37,7 @@ def binToOct(binario):
     return octal[::-1]
 
 def binToHex(binario):
-    return decToHex(binToDec(binario))
-
-def binToDec(binario):
-    decNumber = 0
-    binario=binario[::-1]
-    for i in range(0, len(binario)):
-        decNumber += int(binario[i])* 2**i
-    return decNumber
+    return decToHex(allToDec(binario, base=2))
 
 def decToBin(decimal):
 
@@ -86,6 +87,10 @@ bina = ["1101", "01010001", "10100001", "11110001", "10110111", "00000001", "111
 for i in range(len(numeros)):
     print("DEC->BIN", numeros[i], "= "+decToBin(numeros[i]))
     print("BIN->HEX", bina[i], "= "+binToHex(bina[i]))
-    print("DEC->HEX", numeros[i], "= "+decToHex(binToDec(decToBin(numeros[i]))))
-    print("BIN->DEC", bina[i], "= "+str(binToDec(bina[i])))
+    print("DEC->HEX", numeros[i], "= "+decToHex(allToDec(decToBin(numeros[i]), base=2)))
+    print("BIN->DEC", bina[i], "= "+str(allToDec(bina[i], base=2)))
     print("     BIN->OCT", bina[i], "= "+binToOct(bina[i]))
+
+decTest =  ["1010", 2, "F"]
+print("123", allToDec("123", 8))
+
