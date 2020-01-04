@@ -44,9 +44,9 @@ def getCoursesData(filename, driver):
     file.close()
 
 def logout(driver):
-    #TODO: fix
-    print(driver.find_elements_by_class_name("ui-button ui-widget ui-state-default ui-corner-all"))
-    
+    #TODO: fix ->  solved by using incognite mode of Chrome
+    #driver.execute_script("document.getElementsByClassName('ui-button ui-widget ui-state-default ui-corner-all')[0].click()")
+    pass
 
 def generateJSON(driver, filename):
     #TODO: like a dict
@@ -60,4 +60,4 @@ getCoursesData(filename, driver)
 print("logout...")
 #logout(driver)
 print("closing chrome...")
-driver.close() # close the chrome navigator
+#driver.close() # close the chrome navigator
