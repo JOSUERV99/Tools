@@ -44,8 +44,9 @@ def getCoursesData(filename, driver):
     file.close()
 
 def logout(driver):
-    #TODO: using the logout button
-    pass
+    #TODO: fix
+    print(driver.find_elements_by_class_name("ui-button ui-widget ui-state-default ui-corner-all"))
+    
 
 def generateJSON(driver, filename):
     #TODO: like a dict
@@ -56,5 +57,7 @@ driver = getChromeDriver(chrome_driver_path, initial_page)
 login(credentials, driver)
 selectCourseStage(driver)
 getCoursesData(filename, driver)
+print("logout...")
+#logout(driver)
 print("closing chrome...")
 driver.close() # close the chrome navigator
