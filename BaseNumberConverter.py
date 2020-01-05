@@ -7,23 +7,51 @@
 from math import log, ceil
 import tkinter as tk
 
-style = ["DEF","ABC", "789", "456", "123", "0RC"]
+inputText = ""
+style= [["D", "E", "F", "BIN"],
+        ["A", "B", "C", "OCT"],
+        ["7", "8", "9", "DEC"],
+        ["4", "5", "6", "HEX"],
+        ["1", "2", "3",  "X"],
+        ["0", "R", "C",  "Y"]]
 
 def initWindow():
-    global style
+    global style, inputText
     w = tk.Tk()
-    w.title("Ventana")
-    w.geometry('500x500')
+    w.title("BaseNumberConverter")
+    w.geometry('580x500')
     w.configure(background='black')
 
-    #components
-    for r in range(6):
-        for c in range(3):
-            b = tk.Button(w, text=style[r][c], bg='red', fg='yellow', font='arial')
-            b.grid(row = r, column = c, pady=5, padx=5)
+    color_boton = 'black'
+    cn = 'white'
+    actb="LightCyan3"
+    ancho_boton = 20
+    alto_boton = 20
+
+    def digit(d):
+        pass
+    def clear():
+        pass
+    def enter():
+        print("enter")
+    def convert():
+        global inputText
+        def detectMode(inputText):
+            allowed = "0123456789ABCDEF"
+            for k in inputText:
+                if k not in allowed:
+                    inputText = "ERROR"
+
+    tk.Entry(w,font=('Arial',15,"bold"),width=48,textvariable=inputText, bd=20, insertwidth=4,bg="lavender",justify="right").grid(sticky='N')  
+    for i in range(4):
+        tk.Button(w,font=('Arial',15,"bold"),width=4,textvariable=inputText, text=style[i][3],bd=20,bg="lavender",justify="right").grid(sticky='E')
+    tk.Button(w,font=('Arial',15,"bold"),width=4, height=2,textvariable=inputText, text="=",bd=20,bg="lavender",command=convert, justify="right").grid(sticky='E')
+    
     return w
 
-initWindow().mainloop()
+
+w = initWindow()
+w.mainloop()
 
 # bin, hex, oct for dec to any number
 # dec to bin, hex and oct
