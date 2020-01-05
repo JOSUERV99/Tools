@@ -29,6 +29,19 @@ def allToDec(number, base=10):
         decimal += int(number[i]) * base**i
     return decimal
 
+def allToBin(number, range=3):
+    def calculateSpaces(decimal, counter):
+        if decimal > 2**counter:
+            return calculateSpaces(decimal-2**counter, counter+1)
+        else:
+            return counter
+    
+    if ( range==4 ):
+        #hex
+        pass
+    else:
+        pass
+
 def binToOct(binario):
     octal = ""
     for i in range(len(binario)):
