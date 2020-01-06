@@ -13,13 +13,14 @@ import os, time, json
 from random import randint 
 
 class Course:
-    def __init__(self, code, name, teacher, credits, sessions={}):
+    def __init__(self, code, group, name, teacher, credits, sessions={}):
         self.name = name
+        self.group = group
         self.code = code
         self.teacher = teacher
         self.credits = credits
         self.sessions = sessions
-        self.__dict__ = {"name":self.name, "code":self.code, "teacher":self.teacher, "credits":self.credits, "sessions": self.dictHours()}   
+        self.__dict__ = {"name":self.name, "group":self.group, "code":self.code, "teacher":self.teacher, "credits":self.credits, "sessions": self.dictHours()}   
     def collide(self, otherCourse):
         def getHour(hourWithFormat): # 13:00 for example
             return int(hourWithFormat[:2])*100 + int(hourWithFormat[3:])
@@ -51,34 +52,36 @@ class Session:
         self.__dict__ = {str(self.day): {"startHour":self.startHour, "finalHour":self.finalHour}}
 
 class Generator:
-    def __init__(self, coursesOptions={}):
+    def __init__(self, coursesOptions=[]):
         self.coursesOptions = coursesOptions
     def addCourse(self, course):
         if course not in self.coursesOptions:
-            self.coursesOptions[course.name] = course
-        else:
-            self.coursesOptions[course.name] += course
-    def generateDict(self):
-        _dict = {}
-        for keyCourse in self.coursesOptions:
-            _dict[keyCourse] = {}
-            for course in _dict[keyCourse]:
-                _dict[keyCourse].update(course.__dict__)
-        return _dict
+            self.coursesOptions.append(course)
+    def dictCourses(self):
+        dictionary = {}
+        for course in self.coursesOptions:
+            tagGroup = "G{}".format(course.group)
+            tagCourse = course.name
+            if tagCourse not in dictionary:
+                dictionary[tagCourse] = {tagGroup: course.__dict__}
+            else:
+                dictionary[tagCourse].update({tagGroup: course.__dict__})
+        return dictionary
     def saveJson(self):
         with open('{}.json'.format("courses"), 'w') as file:
-            json.dump(self.generateDict(), file)
+            json.dump(self.dictCourses(), file)
 
 # [Code, Name, Teacher, Credits, [[Day, [startHour, finalHour]], [Day, [startHour, finalHour]] ]]
-session1A = Session("K", "13:00", "14:50")
-session2A = Session("J", "13:00", "14:50")
-session1B = Session("K", "13:00", "15:55")
-session2B = Session("J", "16:00", "16:50")
+# session1A = Session("K", "13:00", "14:50")
+# session2A = Session("J", "13:00", "14:50")
+# session1B = Session("K", "13:00", "15:55")
+# session2B = Session("J", "16:00", "16:50")
+# courseA = Course("IC2001", 3, "Data Structures", "Fulano Mengano", 3, [session1A, session2A])
+# courseB = Course("IC2001", 4, "Data Structures", "Fulano Mengano", 3, [session1B, session2B])
+# gen = Generator()
+# gen.addCourse(courseA)
+# gen.addCourse(courseB)
+# print(gen.dictCourses())
+# gen.saveJson()
+#print(courseA.collide(courseB))
 
-courseA = Course("IC2001", "Data Structures", "Fulano Mengano", 3, [session1A, session2A])
-courseB = Course("IC2001", "Data Structures", "Fulano Mengano", 3, [session1B, session2B])
-
-gen = Generator()
-gen.addCourse(courseA)
-gen.addCourse(courseB)
-print(courseA.collide(courseB))
