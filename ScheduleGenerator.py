@@ -11,6 +11,7 @@
 #Libraries
 import os, time, json
 from random import randint 
+import EnrollmentBot as bot
 
 class Course:
     def __init__(self, code, group, name, teacher, credits, sessions={}):
@@ -54,6 +55,8 @@ class Session:
 class Generator:
     def __init__(self, coursesOptions=[]):
         self.coursesOptions = coursesOptions
+    def dataToScrapy(data):
+        pass
     def addCourse(self, course):
         if course not in self.coursesOptions:
             self.coursesOptions.append(course)

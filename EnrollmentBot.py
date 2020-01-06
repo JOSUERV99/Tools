@@ -12,15 +12,15 @@ credentials = {"username":"josuerojasvega@gmail.com", "key":"Xrl2qpjarV.TEC"}
 filename = "courses.txt"
 
 #options for initialize chrome
-def getChromeDriver(driverPath, url):
+def getChromeDriver(driverPath, url=chrome_driver_path, arg="--incognito"):
     options = Options()
-    options.add_argument("--incognito")
+    options.add_argument(arg)
     driver = webdriver.Chrome(driverPath, chrome_options=options) #open chrome
     driver.get(url)  #enter to the page
     return driver
 
 #login 
-def login(credentials, driver):
+def login(driver, credentials):
     username_field = driver.find_element_by_name("txtUsuario")
     username_field.send_keys(credentials["username"])
     password_field = driver.find_element_by_name("txtPassword")
@@ -43,21 +43,14 @@ def getCoursesData(filename, driver):
     file.write(info.text)
     file.close()
 
-def logout(driver):
-    #TODO: fix ->  solved by using incognite mode of Chrome
-    #driver.execute_script("document.getElementsByClassName('ui-button ui-widget ui-state-default ui-corner-all')[0].click()")
-    pass
-
 def generateJSON(driver, filename):
     #TODO: like a dict
     pass
 
-print("opening chrome...")
-driver = getChromeDriver(chrome_driver_path, initial_page)
-login(credentials, driver)
+browser = getChromeDriver(chrome_driver_path, initial_page)
+login(driver, credentials)
 selectCourseStage(driver)
 getCoursesData(filename, driver)
 print("logout...")
-#logout(driver)
 print("closing chrome...")
 #driver.close() # close the chrome navigator
