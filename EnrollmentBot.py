@@ -47,10 +47,17 @@ def generateJSON(driver, filename):
     #TODO: like a dict
     pass
 
+def savePage(driver, filename='page_src.html'):
+    page = driver.page_source
+    with open(filename, 'w') as f:
+        f.write(page)
+    print(page)
+
 browser = getChromeDriver(chrome_driver_path, initial_page)
-login(driver, credentials)
-selectCourseStage(driver)
-getCoursesData(filename, driver)
+login(browser, credentials)
+savePage(browser)
+selectCourseStage(browser)
+getCoursesData(filename, browser)
 print("logout...")
 print("closing chrome...")
 #driver.close() # close the chrome navigator

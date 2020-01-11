@@ -1,0 +1,111 @@
+﻿
+.ContentCalendar {
+  width: 95%;
+  margin: 25px auto 10px auto;
+}
+
+
+.fc-day-header {
+font-size:11pt;
+color: rgb(77,77,77);
+height: 30px;
+border-bottom: 1px solid;
+}
+
+
+.fc-content {
+  margin: 5px;
+}
+
+
+.fc-head tr td{
+  border: none;
+}
+.fc-head tr td > div{
+    border:none;
+}
+
+/*.fc-head tr td th{
+    border:none;
+}*/
+
+.fc-body {
+      border:none;
+}
+
+.fc-body tr:first-child td:first-child {
+     border: none;
+}
+
+.fc-content-skeleton table tr td {
+      border-bottom: none;
+}
+
+.calendarfooter  {
+    width: 100%;
+    margin-top: 6px;
+}
+.calendarfooter  table{
+    width: 100%;
+    height: 19pt;
+    border-collapse:collapse;
+}
+.calendarfooter  table tr:first-child{
+    height: 19pt;
+}
+.calendarfooter  table tr:first-child td:first-child{
+    width:38px;
+}
+.calendarfooter  table tr:first-child td:nth-child(2){
+    background-color: rgb(177,177,177);
+    color: rgb(255,255,255);
+    text-align:center;
+    font-weight:bold;
+    font-size:11pt;
+}
+
+.fc-title > span {
+ display:block;
+ font-weight:bold;
+ margin-top: 2px;
+}
+
+.fc-event::-webkit-scrollbar {
+width:5px;
+}
+
+
+#divSinHorario {
+width: 500px;
+  height: 50px;
+  position: absolute;
+  /* border: 1px solid; */
+  margin: -20px 0 0 70px;
+  color: rgb(77,77,77);
+}
+#divSinHorario div {
+  width: 100%;
+  /* height: 45px; */
+  max-height: 30px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* background-color: rgb(227,227,227); */
+  border-top: 1px solid rgb(177,177,177);
+  margin-top: 3px;
+}
+
+#spTitSinhorario {
+    font-weight: bold;
+    font-size: 12px;
+}
+#divSinHorario div > span {
+    display: block;
+    margin-top: 2px;
+    font-size: 10px;
+}
+
+#divSinHorario div > span:first-child {
+    margin-top: 4px;
+}
+
+
