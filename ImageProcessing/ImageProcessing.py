@@ -1,9 +1,8 @@
 """ 
-    Objective:
-    Convert a image into a black and white image
-    @author: josuerv99
+@objective Convert a image into a black and white image     
+@author: josuerv99
+@since: 6/4/2020
 """
-
 import cv2 # pip install opencv-python
 
 image_path = 'Image1.png' # (R, G, B, A)

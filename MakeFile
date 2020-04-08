@@ -1,0 +1,5 @@
+run:
+	#pip install $(package_name)
+	.\venv\Scripts\activate
+	#pip install $(package_name)
+	#pip freeze > requirements.txt
