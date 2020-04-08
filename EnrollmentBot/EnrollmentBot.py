@@ -9,7 +9,7 @@ import time, json
 
 chrome_driver_path = r'chromedriver.exe'
 initial_page = r"https://tec-appsext.itcr.ac.cr/Matricula/frmAutenticacion.aspx?ReturnUrl=%2fmatricula"
-credentials = {"username":"josuerojasvega@gmail.com", "key":"Xrl2qpjarV.TEC"}
+credentials = {"username":"email", "key":'pass'}
 filename = "courses.txt"
 
 #options for initialize chrome

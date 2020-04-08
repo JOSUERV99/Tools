@@ -1,7 +1,7 @@
 """ 
 @objective Convert a image into a black and white image     
 @author: josuerv99
-@since: 6/4/2020
+@since: 06/04/2020
 """
 import cv2 # pip install opencv-python
 

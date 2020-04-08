@@ -1,7 +1,7 @@
 """
 @objective: get text, create a .mp3 with it and later play it
 @author: josuerv99
-@since: 7/4/2020
+@since: 07/04/2020
 """
 from gtts import gTTS
 import playsound as player

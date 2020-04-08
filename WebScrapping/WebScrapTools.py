@@ -1,7 +1,7 @@
 """
 @objective Tools for webscrapping with bs4 and selenium
 @author josuerv99
-@since 7/4/2020
+@since 07/04/2020
 """
 from urllib.request import urlopen
 from bs4 import BeautifulSoup

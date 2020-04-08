@@ -1,3 +1,8 @@
+"""
+@objective download n images and saved in a folder given a target 
+@author: Josué Rojas Vega
+@since: 07/04/2019
+"""
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from cv2 import imshow, imread, imwrite

@@ -1,7 +1,7 @@
 """    
 @objective Normalizing courses data from u-page                                                                                                                                                       
 @author Josue Rojas Vega                                                      
-@since 9-12-2019                                                              
+@since 09/12/2019                                                              
 """                                                                                       
 import os, time, json
 from random import randint 
