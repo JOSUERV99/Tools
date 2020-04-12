@@ -7,7 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from cv2 import imshow, imread, imwrite
 from random import randint
-import requests, shutil, os
+import requests, shutil, os, time
 
 class MassiveImageDownloader:
     
@@ -35,7 +35,7 @@ class MassiveImageDownloader:
         return images
     
     @staticmethod
-    def downloadImages(imageObjects, searchTarget, downloadsQuantity=1, folder=default_path):
+    def downloadImages(browser, imageObjects, searchTarget, downloadsQuantity=1, folder=default_path):
         def saveImage(link, filename='img.png'):
             response = requests.get(link, stream=True)
             with open(filename, 'wb') as file:
@@ -60,20 +60,33 @@ class MassiveImageDownloader:
             # download and save image
             img_name = f'{searchTarget}_{random_index}_{n}.png'
             print('Downloading {}'.format(img_name))
-            saveImage(link, filename=img_name)
+            browser.save_screenshoot(img_name)
+            #saveImage(link, filename=img_name)
     
     @staticmethod
     def doIt(target='', quantity=10, folder=default_path):
-        try:
-            browser = MassiveImageDownloader.initBrowser()
-            imageWebElements = MassiveImageDownloader.search(browser, target)
-            MassiveImageDownloader.downloadImages(imageWebElements, target, downloadsQuantity=quantity, folder=folder)
-        except Exception as e:
-            print(e)
-        finally:
+        
+        def close(browser):
             if (browser != None):
                 browser.close()
+        times = 2
+        while(True):
+            browser = None
+            try:
+                browser = MassiveImageDownloader.initBrowser()
+                imageWebElements = MassiveImageDownloader.search(browser, target)
+                MassiveImageDownloader.downloadImages(browser, imageWebElements, target, downloadsQuantity=quantity, folder=folder)
+            except Exception as e:
+                times-=1
+                if (times < 0):
+                    break
+                else:
+                    close(browser)
+                    time.sleep(3)
+                    continue
+            finally:
+                close(browser)
 
 #TODO: fix selection in context menu to download
-#MassiveImageDownloader.doIt(target='sunsets', quantity=1, folder='img_sunsets')
+MassiveImageDownloader.doIt(target='sunsets', quantity=1, folder='img_sunsets')
 
